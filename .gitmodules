@@ -1,0 +1,6 @@
+[submodule "robot_ur3e_setup"]
+	path = robot_ur3e_setup
+	url = https://github.com/Andy-Leo10/robot_ur3e_setup.git
+[submodule "robot_ur3e_manipulation"]
+	path = robot_ur3e_manipulation
+	url = https://github.com/Andy-Leo10/robot_ur3e_manipulation.git

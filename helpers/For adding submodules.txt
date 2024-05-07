@@ -12,4 +12,4 @@ rm -rf ~/ros2_ws/src/FOLDER
 
 step3
 cd ~/ros2_ws/src
-git submodule add <your-FOLDER-repo-url> real_moveit_config
+git submodule add <your-FOLDER-repo-url>
