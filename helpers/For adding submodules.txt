@@ -1,5 +1,6 @@
-step1
+STEPS
 
+step1: create your pkg or folder in src, then push it to github
 cd ~/ros2_ws/src/FOLDER
 git init
 git add .
@@ -7,9 +8,20 @@ git commit -m "Initial commit"
 git remote add origin <your-FOLDER-repo-url>
 git push -u origin master
 
-step2
+step2: remove the folder from your workspace
 rm -rf ~/ros2_ws/src/FOLDER
 
-step3
+step3: add the folder as a submodule in src
 cd ~/ros2_ws/src
 git submodule add <your-FOLDER-repo-url>
+
+NOTES
+
+note1: clone in your pc and pull the submodule
+git clone https://github.com/Andy-Leo10/coffee-dispenser-project.git
+cd coffee-dispenser-project
+git submodule init
+git submodule update
+
+note2:  setup the submodule
+git checkout main
