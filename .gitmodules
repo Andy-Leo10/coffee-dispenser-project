@@ -4,3 +4,6 @@
 [submodule "robot_ur3e_manipulation"]
 	path = robot_ur3e_manipulation
 	url = https://github.com/Andy-Leo10/robot_ur3e_manipulation.git
+[submodule "robot_ur3e_perception"]
+	path = robot_ur3e_perception
+	url = https://github.com/Andy-Leo10/robot_ur3e_perception.git
