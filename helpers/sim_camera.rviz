@@ -247,6 +247,7 @@ Visualization Manager:
       Value: true
       Visibility:
         Grid: true
+        Marker: true
         PointCloud2: true
         RGB: true
         RobotModel: true
@@ -268,6 +269,7 @@ Visualization Manager:
       Visibility:
         DEPTH: true
         Grid: true
+        Marker: true
         PointCloud2: true
         RobotModel: true
         Value: true
@@ -305,6 +307,19 @@ Visualization Manager:
         Value: /wrist_rgbd_depth_sensor/points
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Marker
+      Namespaces:
+        my_namespace: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /free_space_marker
       Value: true
   Enabled: true
   Global Options:
@@ -352,25 +367,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.7009449005126953
+      Distance: 3.5005626678466797
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.18810336291790009
-        Y: 0.18825708329677582
-        Z: -0.5451045036315918
+        X: -0.08860171586275101
+        Y: 0.012963959947228432
+        Z: -0.4431627094745636
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.48039835691452026
+      Pitch: 0.7997964024543762
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.8453993797302246
+      Yaw: 3.110398769378662
     Saved: ~
 Window Geometry:
   DEPTH:
