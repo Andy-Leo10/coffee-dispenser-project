@@ -7,3 +7,6 @@
 [submodule "robot_ur3e_perception"]
 	path = robot_ur3e_perception
 	url = https://github.com/Andy-Leo10/robot_ur3e_perception.git
+[submodule "robot_ur3e_web"]
+	path = robot_ur3e_web
+	url = https://github.com/Andy-Leo10/robot_ur3e_web.git
