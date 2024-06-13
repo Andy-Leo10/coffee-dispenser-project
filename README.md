@@ -12,14 +12,22 @@
 ```
 source ~/ros2_ws/install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
 ```
-Making sure joint state topic is working
+Making sure things are working
 ```
 ros2 topic echo /joint_states
+ros2 topic echo /robot_description
+ros2 topic echo /tf
+ros2 control list_controllers
 ```
 
 ## 1. For launching the move_group and rviz nodes
+for simulation arm
 ```
 cd ~/ros2_ws/; colcon build --packages-select sim_moveit_config; source ~/ros2_ws/install/setup.bash; ros2 launch sim_moveit_config run_moveit.xml
+```
+for real arm
+```
+cd ~/ros2_ws/; colcon build --packages-select real_moveit_config; source ~/ros2_ws/install/setup.bash; ros2 launch real_moveit_config run_moveit.xml
 ```
 
 ## 2. For launching the vision system
