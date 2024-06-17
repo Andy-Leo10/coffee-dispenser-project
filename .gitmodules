@@ -10,3 +10,6 @@
 [submodule "robot_ur3e_web"]
 	path = robot_ur3e_web
 	url = https://github.com/Andy-Leo10/robot_ur3e_web.git
+[submodule "robot_ur3e_yolov5"]
+	path = robot_ur3e_yolov5
+	url = https://github.com/Andy-Leo10/robot_ur3e_yolov5.git
