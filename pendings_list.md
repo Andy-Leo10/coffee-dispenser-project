@@ -4,11 +4,11 @@
 - [ ] manipulation
   - [ ] change "crab" position
 - [ ] perception
-  - [ ] dpi: use offset for holes localization
+  - [x] dpi: use offset for holes localization
   - [ ] yolo: integrate to the system
-    - [ ] get centers
-    - [ ] bind with TF
-    - [ ] bind with Marker
+    - [x] get centers
+    - [x] bind with TF
+    - [x] bind with Marker
 - [x] web-app
 - [ ] docker
   - [ ] work on compose files -> DockerHub
