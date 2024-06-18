@@ -1,11 +1,11 @@
 # pendings list:
 
 ## simulation:
-- [ ] manipulation
-  - [ ] change "crab" position
-- [ ] perception
+- [x] manipulation
+  - [x] change "crab" position
+- [x] perception
   - [x] dpi: use offset for holes localization
-  - [ ] yolo: integrate to the system
+  - [x] yolo: integrate to the system
     - [x] get centers
     - [x] bind with TF
     - [x] bind with Marker
