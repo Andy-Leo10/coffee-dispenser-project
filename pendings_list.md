@@ -17,10 +17,12 @@
 
 ## real env:
 - [ ] manipulation
-  - [ ] grab the cup from the real position
+  - [x] grab the cup from the real position
+  - [ ] update every code
 - [ ] perception
-  - [ ] update the topics
+  - [x] update the topics
   - [ ] bind with TF
   - [ ] bind with Marker
+  - [ ] PARAMETERs: expo-video
 - [ ] web-app: make-up
 - [ ] FINAL: record a video
