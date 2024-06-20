@@ -39,7 +39,10 @@ cd ~/ros2_ws/; colcon build --packages-select sim_moveit_config; source ~/ros2_w
 
 ## 2. For launching the vision system
 ```
-cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_perception; source install/setup.bash; ros2 launch robot_ur3e_perception camera_tf.launch.py
+cd /home/user/ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
+```
+```
+cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception;source install/setup.bash; ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py
 ```
 
 ## 3. For launching the manipulation service server
@@ -97,7 +100,7 @@ cd ~/ros2_ws/; colcon build --packages-select real_moveit_config; source ~/ros2_
 cd /home/user/ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
 ```
 ```
-cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_perception; source install/setup.bash; ros2 launch robot_ur3e_perception yolov5.launch.py
+cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception;source install/setup.bash; ros2 launch robot_ur3e_perception real_yolov5_tf.launch.py
 ```
 
 ## 3. For launching the manipulation service server

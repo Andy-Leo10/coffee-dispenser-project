@@ -18,10 +18,12 @@
 ## real env:
 - [ ] manipulation
   - [x] grab the cup from the real position
-  - [ ] update every code
+  - [x] add Scene
+  - [x] update every code
 - [ ] perception
   - [x] update the topics
-  - [ ] bind with TF
+  - [ ] solve Distance problem
+  - [x] bind with TF
   - [ ] bind with Marker
   - [ ] PARAMETERs: expo-video
 - [ ] web-app: make-up
