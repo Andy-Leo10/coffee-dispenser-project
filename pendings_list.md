@@ -13,18 +13,21 @@
 - [ ] docker
   - [ ] work on compose files -> DockerHub
   - [ ] test on Linux-PC
-- [ ] FINAL: record a video
+- [ ] FINAL
+  - [ ] record a video
 
 ## real env:
-- [ ] manipulation
+- [x] manipulation
   - [x] grab the cup from the real position
   - [x] add Scene
   - [x] update every code
-- [ ] perception
+- [x] perception
   - [x] update the topics
-  - [ ] solve Distance problem
+  - [x] solve Distance problem
   - [x] bind with TF
-  - [ ] bind with Marker
-  - [ ] PARAMETERs: expo-video
+  - [x] bind with Marker
+  - [x] PARAMETERs: expo-video
 - [ ] web-app: make-up
-- [ ] FINAL: record a video
+- [ ] FINAL
+  - [ ] Integration
+  - [ ] record a video

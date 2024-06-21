@@ -1,0 +1,27 @@
+# Create a Docker compose file to start up all the 
+# previous containers. This Docker Compose file will 
+# start the following systems:
+
+# - Gazebo simulation
+# - X
+# - Y
+
+version: '3.7'
+services:
+    gazebo_server:
+        hostname: gazebo_server
+        build:
+            context: .
+            dockerfile: starbots-sim-gazebo
+        # image: andyleo10/andres.alamo-cp22:starbots-sim-gazebo
+        container_name: container_gazebo_server
+        environment:
+            - DISPLAY
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        networks:
+            - ros-net
+        command: /bin/bash -c "sleep 2 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
+
+networks:
+    ros-net:    
