@@ -17,11 +17,28 @@ services:
         container_name: container_gazebo_server
         environment:
             - DISPLAY
+            - GAZEBO_MODEL_PATH=/root/ros2_ws/src/the_construct_office_gazebo/models:/root/ros2_ws/src/the_construct_office_gazebo/barista_ros2/barista_description:/root/ros2_ws/src/ur_arm:${GAZEBO_MODEL_PATH}
         volumes:
             - /tmp/.X11-unix:/tmp/.X11-unix
         networks:
             - ros-net
-        command: /bin/bash -c "sleep 2 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
+        #command: tail -f /dev/null
+        command: "/bin/bash -c \"sleep 2 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml\""
+
+    # vision_server:
+    #     hostname: vision_server
+    #     build:
+    #         context: .
+    #         dockerfile: starbots-sim-yolo
+    #     # image: andyleo10/andres.alamo-cp22:starbots-sim-yolo
+    #     container_name: container_vision_server
+    #     environment:
+    #         - DISPLAY
+    #     volumes:
+    #         - /tmp/.X11-unix:/tmp/.X11-unix
+    #     networks:
+    #         - ros-net
+    #     command: "/bin/bash -c \"sleep 15 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch robot_ur3e_perception docker_yolov5_tf.launch.py\""
 
 networks:
     ros-net:    
