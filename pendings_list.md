@@ -10,9 +10,9 @@
     - [x] bind with TF
     - [x] bind with Marker
 - [x] web-app
-- [ ] docker
-  - [ ] work on compose files -> DockerHub
-  - [ ] test on Linux-PC
+- [x] ~~docker~~
+  - [x] work on compose files -> DockerHub
+  - [x] test on Linux-PC
 - [ ] FINAL
   - [ ] record a video
 
@@ -27,7 +27,7 @@
   - [x] bind with TF
   - [x] bind with Marker
   - [x] PARAMETERs: expo-video
-- [ ] web-app: make-up
+- [ ] web-app: topics
 - [ ] FINAL
   - [ ] Integration
   - [ ] record a video

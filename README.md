@@ -1,5 +1,12 @@
 # coffee-dispenser-project
 
+```
+git clone --recursive https://github.com/Andy-Leo10/coffee-dispenser-project.git
+```
+```
+git pull --recurse-submodules
+```
+
 - [coffee-dispenser-project](#coffee-dispenser-project)
 - [SIMULATED ROBOT](#simulated-robot)
   - [0. For launching the simulation](#0-for-launching-the-simulation)
@@ -7,13 +14,14 @@
   - [2. For launching the vision system](#2-for-launching-the-vision-system)
   - [3. For launching the manipulation service server](#3-for-launching-the-manipulation-service-server)
   - [4. For launching the Foxglove's bridge](#4-for-launching-the-foxgloves-bridge)
-  - [z. or running the mobile robot](#z-or-running-the-mobile-robot)
+  - [5. Others](#5-others)
 - [REAL ROBOT](#real-robot)
   - [0. For checking the robot system](#0-for-checking-the-robot-system)
   - [1. For launching the move\_group and rviz nodes](#1-for-launching-the-move_group-and-rviz-nodes-1)
   - [2. For launching the vision system](#2-for-launching-the-vision-system-1)
   - [3. For launching the manipulation service server](#3-for-launching-the-manipulation-service-server-1)
   - [4. For launching the Foxglove's bridge](#4-for-launching-the-foxgloves-bridge-1)
+  - [5. Others](#5-others-1)
 - [DOCKER](#docker)
   - [Compose](#compose)
   - [Build](#build)
@@ -23,11 +31,16 @@
   - [Previous step for visualization](#previous-step-for-visualization)
   - [Previous step for Docker](#previous-step-for-docker)
 
+---
+
 <details>
 <summary><b>SIMULATED ROBOT</b></summary>
 
 # SIMULATED ROBOT
 ## 0. For launching the simulation
+```
+cd ~/ros2_ws/ ;colcon build --packages-select barista_gazebo ur_simulation_gazebo the_construct_office_gazebo;source install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
+```
 ```
 source ~/ros2_ws/install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
 ```
@@ -37,6 +50,7 @@ ros2 topic echo /joint_states
 ros2 topic echo /robot_description
 ros2 topic echo /tf
 ros2 control list_controllers
+ros2 run tf2_ros tf2_echo base_link tool0
 ros2 run tf2_tools view_frames
 ```
 
@@ -47,10 +61,13 @@ cd ~/ros2_ws/; colcon build --packages-select sim_moveit_config; source ~/ros2_w
 
 ## 2. For launching the vision system
 ```
-cd /home/user/ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
+export PYTHONPATH=$PYTHONPATH:/home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception/venv/lib/python3.10/site-packages/
 ```
 ```
-cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception;source install/setup.bash; ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py
+cd /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception; source venv/bin/activate
+```
+```
+cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception --symlink-install; source install/setup.bash; ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py
 ```
 
 ## 3. For launching the manipulation service server
@@ -75,13 +92,19 @@ check the 'ip' of the virtual machine
 rosbridge_address
 ```
 
-## z. or running the mobile robot
+## 5. Others
 ```
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/barista_1/cmd_vel
 ```
+```
+ros2 run gazebo_ros spawn_entity.py -file /home/user/ros2_ws/src/coffee-dispenser-project/universal_robot_ros2/the_construct_office_gazebo/models/portable_cup_2/model.sdf -x 14.16 -y -18.19 -z 1.025 -R 1.57 -P 0 -Y 0 -entity cupX
+```
+```
+cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation sim_pick_and_place_advanced.launch.py
+```
 </details>
 
-
+---
 
 <details>
 <summary><b>REAL ROBOT</b></summary>
@@ -94,6 +117,7 @@ ros2 topic echo /joint_states
 ros2 topic echo /robot_description
 ros2 topic echo /tf
 ros2 control list_controllers
+ros2 run tf2_ros tf2_echo base_link tool0
 ros2 run tf2_tools view_frames
 ```
 
@@ -105,10 +129,13 @@ cd ~/ros2_ws/; colcon build --packages-select real_moveit_config; source ~/ros2_
 
 ## 2. For launching the vision system
 ```
-cd /home/user/ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
+export PYTHONPATH=$PYTHONPATH:/home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception/venv/lib/python3.10/site-packages/
 ```
 ```
-cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception;source install/setup.bash; ros2 launch robot_ur3e_perception real_yolov5_tf.launch.py
+cd /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception; source venv/bin/activate
+```
+```
+cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception --symlink-install; source install/setup.bash; ros2 launch robot_ur3e_perception real_yolov5_tf.launch.py
 ```
 
 ## 3. For launching the manipulation service server
@@ -132,9 +159,13 @@ check the 'ip' of the virtual machine
 ```
 rosbridge_address
 ```
+## 5. Others
+```
+cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation real_pick_and_place_advanced.launch.py
+```
 </details>
 
-
+---
 
 <details>
 <summary><b>DOCKER</b></summary>
@@ -147,7 +178,7 @@ docker-compose -f docker-compose-sim.yml up --build | tee build.log
 ```
 execute a bash of the service
 ```
-docker exec -it starbots_sim_docker_NAME_server_1 /bin/bash
+docker exec -it container_NAME_server /bin/bash
 ```
 
 ## Build
@@ -196,3 +227,5 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 </details>
+
+---
