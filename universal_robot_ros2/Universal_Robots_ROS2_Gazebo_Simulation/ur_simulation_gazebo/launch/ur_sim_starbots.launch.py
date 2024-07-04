@@ -294,8 +294,8 @@ def generate_launch_description():
     )
 
     #robotiq_models_pkg_path = "/home/user/ros2_ws/src/robotiq_85_gripper"
-    onrobot_models_pkg_path = "/home/user/ros2_ws/src/universal_robot_ros2"
-    barista_models_pkg_path = "/home/user/ros2_ws/src/universal_robot_ros2/barista_ros2"
+    onrobot_models_pkg_path = "/home/user/ros2_ws/src/coffee-dispenser-project/universal_robot_ros2"
+    barista_models_pkg_path = "/home/user/ros2_ws/src/coffee-dispenser-project/universal_robot_ros2/barista_ros2"
 
     if 'GAZEBO_MODEL_PATH' in os.environ:
         os.environ['GAZEBO_MODEL_PATH'] =  os.environ['GAZEBO_MODEL_PATH'] + ':' + onrobot_models_pkg_path + ':' + barista_models_pkg_path
