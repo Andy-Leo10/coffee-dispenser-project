@@ -39,10 +39,10 @@ git pull --recurse-submodules
 # SIMULATED ROBOT
 ## 0. For launching the simulation
 ```
-cd ~/ros2_ws/ ;colcon build --packages-select barista_gazebo ur_simulation_gazebo the_construct_office_gazebo;source install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
-```
-```
 source ~/ros2_ws/install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
+```
+```
+cd ~/ros2_ws/ ;colcon build --packages-select barista_gazebo ur_description ur_simulation_gazebo the_construct_office_gazebo --event-handlers console_direct+; source install/setup.bash; ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml
 ```
 Making sure things are working
 ```
@@ -60,17 +60,27 @@ cd ~/ros2_ws/; colcon build --packages-select sim_moveit_config; source ~/ros2_w
 ```
 
 ## 2. For launching the vision system
+Set the environment
 ```
 export PYTHONPATH=$PYTHONPATH:/home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception/venv/lib/python3.10/site-packages/
 ```
 ```
 cd /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception; source venv/bin/activate
 ```
+**LAUNCH**
 ```
 cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception --symlink-install; source install/setup.bash; ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py
 ```
 
 ## 3. For launching the manipulation service server
+Set some parameters
+```
+ros2 param load /joint_trajectory_controller /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_manipulation/params/goal_precision_sim.yaml
+```
+```
+ros2 param load /moveit_simple_controller_manager /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_manipulation/params/timeout_allowed.yaml
+```
+**LAUNCH**
 ```
 cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation sim_service_server.launch.py
 ```
@@ -97,7 +107,7 @@ rosbridge_address
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/barista_1/cmd_vel
 ```
 ```
-ros2 run gazebo_ros spawn_entity.py -file /home/user/ros2_ws/src/coffee-dispenser-project/universal_robot_ros2/the_construct_office_gazebo/models/portable_cup_2/model.sdf -x 14.16 -y -18.19 -z 1.025 -R 1.57 -P 0 -Y 0 -entity cupX
+ros2 run gazebo_ros spawn_entity.py -file /home/user/ros2_ws/src/coffee-dispenser-project/universal_robot_ros2/the_construct_office_gazebo/models/portable_cup_2/color.sdf -x 14.16 -y -18.19 -z 1.025 -R 1.57 -P 0 -Y 0 -entity cupX
 ```
 ```
 cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation sim_pick_and_place_advanced.launch.py
@@ -128,17 +138,31 @@ cd ~/ros2_ws/; colcon build --packages-select real_moveit_config; source ~/ros2_
 ```
 
 ## 2. For launching the vision system
+Set the environment
 ```
 export PYTHONPATH=$PYTHONPATH:/home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception/venv/lib/python3.10/site-packages/
 ```
 ```
 cd /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_perception; source venv/bin/activate
 ```
+**LAUNCH**
 ```
 cd ~/ros2_ws/ ;colcon build --packages-select robot_ur3e_perception --symlink-install; source install/setup.bash; ros2 launch robot_ur3e_perception real_yolov5_tf.launch.py
 ```
+optionally
+```
+ros2 param set /D415/D415 pointcloud.enable true
+```
 
 ## 3. For launching the manipulation service server
+Set some parameters
+```
+ros2 param load /scaled_joint_trajectory_controller /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_manipulation/params/goal_precision_real.yaml
+```
+```
+ros2 param load /moveit_simple_controller_manager /home/user/ros2_ws/src/coffee-dispenser-project/robot_ur3e_manipulation/params/timeout_allowed.yaml
+```
+**LAUNCH**
 ```
 cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation real_service_server.launch.py
 ```
