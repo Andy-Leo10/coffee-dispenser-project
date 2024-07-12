@@ -13,8 +13,8 @@
 - [x] ~~docker~~
   - [x] work on compose files -> DockerHub
   - [x] test on Linux-PC
-- [ ] FINAL
-  - [ ] record a video
+- [x] FINAL
+  - [x] record a video
 
 ## real env:
 - [x] manipulation
@@ -27,7 +27,7 @@
   - [x] bind with TF
   - [x] bind with Marker
   - [x] PARAMETERs: expo-video
-- [ ] web-app: topics
-- [ ] FINAL
-  - [ ] Integration
-  - [ ] record a video
+- [x] web-app: topics
+- [x] FINAL
+  - [x] Integration
+  - [x] record a video
