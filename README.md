@@ -114,6 +114,8 @@ cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source in
 ```
 </details>
 
+https://github.com/user-attachments/assets/92f4791e-0bac-4bef-9169-775b475a8087
+
 ---
 
 <details>
@@ -188,6 +190,8 @@ rosbridge_address
 cd ~/ros2_ws/; colcon build --packages-select robot_ur3e_manipulation; source install/setup.bash; ros2 launch robot_ur3e_manipulation real_pick_and_place_advanced.launch.py
 ```
 </details>
+
+https://github.com/user-attachments/assets/8118c878-4b1d-4623-8eb4-301db0bc6a36
 
 ---
 
