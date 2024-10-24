@@ -26,7 +26,9 @@ RUN apt-get update && apt-get install -y \
 RUN rosdep update
 
 # clone yolov5 repo in / directory
-RUN git clone https://github.com/ultralytics/yolov5.git /yolov5
+# RUN git clone https://github.com/ultralytics/yolov5.git /yolov5
+# Update setuptools to the latest version
+RUN python3 -m pip install --upgrade setuptools
 
 # Create an overlay Colcon workspace
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
@@ -34,13 +36,16 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && cd /ros2_ws \
     && colcon build --symlink-install"
 COPY /robot_ur3e_perception/ /ros2_ws/src/robot_ur3e_perception/
-COPY /robot_ur3e_yolov5/ /ros2_ws/src/robot_ur3e_yolov5/
+# COPY /robot_ur3e_yolov5/ /ros2_ws/src/robot_ur3e_yolov5/
+COPY /yolov5/ /ros2_ws/src/yolov5/
 
+# Set the PYTHONPATH environment variable
+ENV PYTHONPATH=$PYTHONPATH:/ros2_ws/src/robot_ur3e_perception/venv/lib/python3.10/site-packages/
 # Install dependencies
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && cd /ros2_ws/src/robot_ur3e_perception; \
-    python3 -m pip install torch torchvision; \
-    python3 -m pip install -r requirements.txt"
+    # source virtual environment
+    source venv/bin/activate"
     
 # Attempt to install dependencies, skipping the problematic package
 RUN apt-get update && apt-get upgrade -y && \
@@ -58,5 +63,5 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
 WORKDIR /ros2_ws
 # Set up the entrypoint
 # CMD /bin/bash -c "source /ros2_ws/install/setup.bash \
-#     && cd /home/user/ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
+#     && cd /ros2_ws/src/robot_ur3e_perception; source venv/bin/activate
 #     && ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py

@@ -23,13 +23,10 @@ git pull --recurse-submodules
   - [4. For launching the Foxglove's bridge](#4-for-launching-the-foxgloves-bridge-1)
   - [5. Others](#5-others-1)
 - [DOCKER](#docker)
+  - [Previous steps for Docker](#previous-steps-for-docker)
+  - [Previous steps for visualization](#previous-steps-for-visualization)
   - [Compose](#compose)
-  - [Build](#build)
-  - [Run](#run)
-  - [New shell](#new-shell)
   - [Clean](#clean)
-  - [Previous step for visualization](#previous-step-for-visualization)
-  - [Previous step for Docker](#previous-step-for-docker)
 
 ---
 
@@ -199,50 +196,8 @@ https://github.com/user-attachments/assets/8118c878-4b1d-4623-8eb4-301db0bc6a36
 <summary><b>DOCKER</b></summary>
 
 # DOCKER
-## Compose
-```
-docker-compose -f docker-compose-sim.yml up --build
-docker-compose -f docker-compose-sim.yml up --build | tee build.log
-```
-execute a bash of the service
-```
-docker exec -it container_NAME_server /bin/bash
-```
 
-## Build
-```
-sudo docker build -f starbots-sim-IMAGE -t starbots-sim-IMAGE .
-```
-
-## Run
-```
-docker run --rm -it -p 11311:11311 -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix starbots-sim-gazebo:latest bash
-```
-
-## New shell
-```
-sudo docker exec -it NAME /bin/bash
-```
-
-## Clean
-```
-docker kill $(docker ps -aq) &> /dev/null;
-docker container prune -f
-docker rmi $(docker images -q) -f
-```
-
-## Previous step for visualization
-**check display available**
-```
-ls -la /tmp/.X11-unix/
-echo $DISPLAY
-```
-**remove restrictions to X-server**
-```
-xhost +local:root
-```
-
-## Previous step for Docker 
+## Previous steps for Docker 
 **installation**
 ```
 sudo apt-get update
@@ -254,6 +209,35 @@ sudo service docker start
 sudo usermod -aG docker $USER
 newgrp docker
 ```
+
+## Previous steps for visualization
+**check display available**
+```
+ls -la /tmp/.X11-unix/
+echo $DISPLAY
+```
+**remove restrictions to X-server**
+```
+xhost +local:root
+```
+
+## Compose
+```
+docker-compose -f docker-compose-sim.yml up --build
+docker-compose -f docker-compose-sim.yml up --build | tee build.log
+```
+execute a bash of the service
+```
+docker exec -it container_NAME /bin/bash
+```
+
+## Clean
+```
+docker kill $(docker ps -aq) &> /dev/null;
+docker container prune -f
+docker rmi $(docker images -q) -f
+```
+
 </details>
 
 ---

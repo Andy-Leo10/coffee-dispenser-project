@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     python3-vcstool \
     wget \
     # Add other necessary packages here
+    ros-humble-gazebo-ros2-control \
     && rm -rf /var/lib/apt/lists/*
 
 # It's generally a good idea to run rosdep update as a non-root user,
@@ -31,6 +32,8 @@ RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && colcon build --symlink-install"
 COPY /robot_ur3e_setup/ /ros2_ws/src/robot_ur3e_setup/
 COPY /universal_robot_ros2/ /ros2_ws/src/universal_robot_ros2/
+COPY /robot_ur3e_setup/ /ros2_ws/src/robot_ur3e_setup/
+COPY /robot_ur3e_manipulation/ /ros2_ws/src/robot_ur3e_manipulation/
 
 # Attempt to install dependencies, skipping the problematic package
 RUN apt-get update && apt-get upgrade -y && \

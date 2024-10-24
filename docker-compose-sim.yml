@@ -9,36 +9,84 @@
 version: '3.7'
 services:
     gazebo_server:
-        hostname: gazebo_server
+        hostname: gazebo
         build:
             context: .
             dockerfile: starbots-sim-gazebo
         # image: andyleo10/andres.alamo-cp22:starbots-sim-gazebo
-        container_name: container_gazebo_server
+        container_name: gazebo_server_container
         environment:
             - DISPLAY
-            - GAZEBO_MODEL_PATH=/root/ros2_ws/src/the_construct_office_gazebo/models:/root/ros2_ws/src/the_construct_office_gazebo/barista_ros2/barista_description:/root/ros2_ws/src/ur_arm:${GAZEBO_MODEL_PATH}
+            # - GAZEBO_MODEL_PATH=/ros2_ws/src/universal_robot_ros2/the_construct_office_gazebo/models:/ros2_ws/src/universal_robot_ros2/barista_ros2/barista_description/models:/ros2_ws/src/universal_robot_ros2/Universal_Robots_ROS2_Description:/ros2_ws/src/universal_robot_ros2:${GAZEBO_MODEL_PATH}
+            # - GAZEBO_MODEL_PATH=/ros2_ws/src/universal_robot_ros2/the_construct_office_gazebo/models:/ros2_ws/src/universal_robot_ros2/barista_ros2/barista_description/models:/ros2_ws/src/universal_robot_ros2/Universal_Robots_ROS2_Description:${GAZEBO_MODEL_PATH}
+            - GAZEBO_MODEL_PATH=/ros2_ws/src/universal_robot_ros2:${GAZEBO_MODEL_PATH}
+            - DRI_PRIME=1
+            - NV_PRIME_RENDER_OFFLOAD=1
+            - VK_LAYER_NV_optimus=NVIDIA_only
+            - __GLX_VENDOR_LIBRARY_NAME=nvidia            
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /dev:/dev # Optional: share /dev for GPU access
+        networks:
+            - ros2-net
+        runtime: nvidia
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [gpu]            
+        command: tail -f /dev/null
+        # command: "/bin/bash -c \"sleep 2 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml\""
+
+    vision_server:
+        hostname: vision
+        build:
+            context: .
+            dockerfile: starbots-sim-yolo
+        # image: andyleo10/andres.alamo-cp22:starbots-sim-yolo
+        container_name: vision_server_container
+        environment:
+            - DISPLAY
+            - PYTHONPATH=/ros2_ws/src/robot_ur3e_perception/venv/lib/python3.10/site-packages/:${PYTHONPATH}
         volumes:
             - /tmp/.X11-unix:/tmp/.X11-unix
         networks:
-            - ros-net
-        #command: tail -f /dev/null
-        command: "/bin/bash -c \"sleep 2 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch the_construct_office_gazebo starbots_ur3e.launch.xml\""
+            - ros2-net
+        command: tail -f /dev/null
+        # command: "/bin/bash -c \"sleep 15 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && source /ros2_ws/src/robot_ur3e_perception/venv/bin/activate && ros2 launch robot_ur3e_perception alt_yolov5_tf.launch.py\""
 
-    # vision_server:
-    #     hostname: vision_server
-    #     build:
-    #         context: .
-    #         dockerfile: starbots-sim-yolo
-    #     # image: andyleo10/andres.alamo-cp22:starbots-sim-yolo
-    #     container_name: container_vision_server
-    #     environment:
-    #         - DISPLAY
-    #     volumes:
-    #         - /tmp/.X11-unix:/tmp/.X11-unix
-    #     networks:
-    #         - ros-net
-    #     command: "/bin/bash -c \"sleep 15 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch robot_ur3e_perception docker_yolov5_tf.launch.py\""
+    moveit_server:
+        hostname: moveit
+        build:
+            context: .
+            dockerfile: starbots-sim-gazebo
+        # image: andyleo10/andres.alamo-cp22:starbots-sim-moveit
+        container_name: moveit_server_container
+        environment:
+            - DISPLAY
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        networks:
+            - ros2-net
+        command: tail -f /dev/null
+        # command: "/bin/bash -c \"sleep 15 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch sim_moveit_config move_group.launch.py\""
+
+    manipulation_server:
+        hostname: manipulation
+        build:
+            context: .
+            dockerfile: starbots-sim-gazebo
+        # image: andyleo10/andres.alamo-cp22:starbots-sim-manipulation
+        container_name: manipulation_server_container
+        environment:
+            - DISPLAY
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        networks:
+            - ros2-net
+        command: tail -f /dev/null
+        # command: "/bin/bash -c \"sleep 15 && source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch robot_ur3e_manipulation sim_service_server.launch.py\""
 
 networks:
-    ros-net:    
+    ros2-net:    
+        driver: bridge
