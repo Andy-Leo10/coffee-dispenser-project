@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     # Add other necessary packages here
     python3-pip \
+    python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
 # It's generally a good idea to run rosdep update as a non-root user,
@@ -27,25 +28,25 @@ RUN rosdep update
 
 # clone yolov5 repo in / directory
 # RUN git clone https://github.com/ultralytics/yolov5.git /yolov5
-# Update setuptools to the latest version
-RUN python3 -m pip install --upgrade setuptools
-
 # Create an overlay Colcon workspace
 RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
     && mkdir -p /ros2_ws/src \
     && cd /ros2_ws \
     && colcon build --symlink-install"
+
 COPY /robot_ur3e_perception/ /ros2_ws/src/robot_ur3e_perception/
 # COPY /robot_ur3e_yolov5/ /ros2_ws/src/robot_ur3e_yolov5/
 COPY /yolov5/ /ros2_ws/src/yolov5/
 
+# Create virtual environment and install Python dependencies
+RUN cd /ros2_ws/src/robot_ur3e_perception \
+    && python3 -m venv venv \
+    && . venv/bin/activate \
+    && pip install --upgrade pip "setuptools<80" \
+    && pip install -r requirements.txt
+
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH=$PYTHONPATH:/ros2_ws/src/robot_ur3e_perception/venv/lib/python3.10/site-packages/
-# Install dependencies
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash \
-    && cd /ros2_ws/src/robot_ur3e_perception; \
-    # source virtual environment
-    source venv/bin/activate"
     
 # Attempt to install dependencies, skipping the problematic package
 RUN apt-get update && apt-get upgrade -y && \
